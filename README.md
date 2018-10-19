@@ -3,6 +3,11 @@
 The basic metronome application that can play peiodic sounds based on the settings.
 
 ## Table of Contents
+* [Metronome](https://github.com/Mick609/Metronome/blob/master/README.md#public-class-metronome-commickexamplemetronomeutilitiesmetronome)
+
+* [MetronomeEvent](https://github.com/Mick609/Metronome/blob/master/README.md#public-class-metronomeevent-commickexamplemetronomedomainsmetronomeevent)
+
+* [MainActivity](https://github.com/Mick609/Metronome/blob/master/README.md#public-class-mainactivity-extends-appcompatactivity-commickexamplemetronomeactivitiesmainactivity)
 
 ## public class Metronome (com.mick.example.metronome.utilities.Metronome)
 
