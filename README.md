@@ -7,7 +7,21 @@ The basic metronome application that can play peiodic sounds based on the settin
 
 * [MetronomeEvent](https://github.com/Mick609/Metronome/blob/master/README.md#public-class-metronomeevent-commickexamplemetronomedomainsmetronomeevent)
 
-* [MainActivity](https://github.com/Mick609/Metronome/blob/master/README.md#public-class-mainactivity-extends-appcompatactivity-commickexamplemetronomeactivitiesmainactivity)
+## Sample Code:
+
+```
+//Init the variable
+metronome = new Metronome(this, "Test Session");
+
+//set bpm, (ret == false) if setBpm(newBpm) fails
+ret = metronome.setBpm(60);
+
+//Start playing
+metronome.start();
+
+//Stop playing
+metronome.stop();
+```
 
 ## public class Metronome (com.mick.example.metronome.utilities.Metronome)
 
@@ -81,19 +95,3 @@ Initialise the session, count, currentBPM, and timestamp variables.
 1. public String toString(): Returns the information of this event in String.
 
 and Getters and Setters for the other variables...
-
-## public class MainActivity extends AppCompatActivity (com.mick.example.metronome.activities.mainactivity)
-
-The class has 2 variables, and 2 methods.
-
-### Variables
-
-1. private static Metronome metronome: The object of the class Metronome.
-
-2. private TextView status: the object refer to the UI component.
-
-### Methods
-
-1. protected void onCreate(Bundle savedInstanceState): Init the variables.
-
-2. public void onClick(View v): Read the input of the EditText in UI and set the result as bpm of the metronome. Then start the metronome or stop it.
