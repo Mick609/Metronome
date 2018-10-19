@@ -13,10 +13,10 @@ The basic metronome application that can play peiodic sounds based on the settin
 
 ```
 //Init the variable
-metronome = new Metronome(this, "Test Session");
+Metronome metronome = new Metronome(this, "Test Session");
 
 //set bpm, (ret == false) if setBpm(newBpm) fails
-ret = metronome.setBpm(60);
+boolean ret = metronome.setBpm(60);
 
 //Start playing
 metronome.start();
