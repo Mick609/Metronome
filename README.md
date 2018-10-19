@@ -62,7 +62,7 @@ Initialise the Context, session, and status variable.
 
 3. private void playSound(): If this is not the first time of the metronome session to play sound, then play sound. The reason of skiping the first playback is that the it tends to be delayed significantly.
 
-4. public String getStatus(): Returns the String content of variable status.
+4. public String getStatus(): Returns the String value of variable status.
 
 5. public void setStatus(String status): Set the status variable to the new value.
 
