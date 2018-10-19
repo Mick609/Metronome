@@ -2,6 +2,8 @@
 
 The basic metronome application that can play peiodic sounds based on the settings.
 
+## Table of Contents
+
 ## public class Metronome (com.mick.example.metronome.utilities.Metronome)
 
 The class Metronome has 10 variables, 1 constructor, 7 methods, and 1 sub-class for a modyfied timertask object.
@@ -31,7 +33,7 @@ The class Metronome has 10 variables, 1 constructor, 7 methods, and 1 sub-class 
 ### Constructor:
 Initialise the Context, session, and status variable.
 
-### Method
+### Methods
 
 1. public void start(): Stop current metronome event if there is any, then init the MediaPlayer, status, count, Timer, and TimerTask, then schedule the metronome event at a fixed rate, that means the event only happens based on the first one (No drafting effect).
 
@@ -50,3 +52,43 @@ Initialise the Context, session, and status variable.
 ### Sub-class
 
 class MyTimerTask extends TimerTask: Contains an Override method public void run() that calls the playsound() method.
+
+## public class MetronomeEvent (com.mick.example.metronome.domains.MetronomeEvent)
+
+The class has 4 variables, 1 constructor, and 9 methods.
+
+### Variables
+
+1. private String session: The session code of this MetronomeEvent.
+
+2. private int count: The count code of this MetronomeEvent.
+
+3. private int currentBPM: The current bpm of this MetronomeEvent.
+
+4. private long timestamp: The timestamp when dropping this MetronomeEvent.
+
+### Constructor:
+
+Initialise the session, count, currentBPM, and timestamp variables.
+
+### Methods:
+
+1. public String toString(): Returns the information of this event in String.
+
+and Getters and Setters for the other variables...
+
+## public class MainActivity extends AppCompatActivity (com.mick.example.metronome.activities.mainactivity)
+
+The class has 2 variables, and 2 methods.
+
+### Variables
+
+1. private static Metronome metronome: The object of the class Metronome.
+
+2. private TextView status: the object refer to the UI component.
+
+### Methods
+
+1. protected void onCreate(Bundle savedInstanceState): Init the variables.
+
+2. public void onClick(View v): Read the input of the EditText in UI and set the result as bpm of the metronome. Then start the metronome or stop it.
