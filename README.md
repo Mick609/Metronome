@@ -23,11 +23,19 @@ metronome.start();
 
 //Stop playing
 metronome.stop();
+
+//Get all the Metronome events record
+ArrayList<MetronomeEvent> eventsList = getAllMetronomeEvents();
+
+//Display all the recorded metronome events
+For(int i = 0;i < eventsList.size();i++;){
+  System.out.println(eventsList.get(i).toString);
+}
 ```
 
 ## public class Metronome (com.mick.example.metronome.utilities.Metronome)
 
-The class Metronome has 10 variables, 1 constructor, 7 methods, and 1 sub-class for a modyfied timertask object.
+The class Metronome has 13 variables, 1 constructor, 10 methods, and 1 sub-class for a modyfied timertask object.
 
 ### Variables:
 
@@ -49,7 +57,11 @@ The class Metronome has 10 variables, 1 constructor, 7 methods, and 1 sub-class 
 
 9. private MyTimerTask mainTimerTask: The Timetask object for the scheduling of the metronome event.
 
-10.private String status: The current status of the metronome application (is playing or not).
+10.private ServerNTP mServerNTP: The object for the usage of NTP service.
+
+11.private String fileName: the name of the file stored in the system storage.
+
+12.ArrayList<MetronomeEvent>: The ArrayList that contains all the metronome events stored in the system.
 
 ### Constructor:
 Initialise the Context, session, and status variable.
@@ -68,7 +80,11 @@ Initialise the Context, session, and status variable.
 
 6. public int getBpm(): Returns the current bpm variable.
 
-7. public boolean setBpm(int newBpm): Set the variable bpm to the new value.
+7. private void appendToFile(String data, Context context): append the recent metronome event to the file for storage.
+
+8. private ArrayList<String> readFile(Context context): read the file that contains the metonome events records.
+
+9. public ArrayList<MetronomeEvent> getAllMetronomeEvents(): returns all the metrononme events stored in the file system.
 
 ### Sub-class
 
@@ -76,7 +92,7 @@ class MyTimerTask extends TimerTask: Contains an Override method public void run
 
 ## public class MetronomeEvent (com.mick.example.metronome.domains.MetronomeEvent)
 
-The class has 4 variables, 1 constructor, and 9 methods.
+The class has 4 variables, 1 constructor, and 10 methods.
 
 ### Variables
 
@@ -95,5 +111,6 @@ Initialise the session, count, currentBPM, and timestamp variables.
 ### Methods:
 
 1. public String toString(): Returns the information of this event in String.
+1. public String toStorageString(): Returns the information of this event in String for the file storage.
 
 and Getters and Setters for the other variables...
