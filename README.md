@@ -25,7 +25,7 @@ metronome.start();
 metronome.stop();
 
 //Get all the Metronome events record
-ArrayList<MetronomeEvent> eventsList = getAllMetronomeEvents();
+ArrayList<MetronomeEvent> eventsList = metronome.getAllMetronomeEvents();
 
 //Display all the recorded metronome events
 For(int i = 0;i < eventsList.size();i++;){
