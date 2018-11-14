@@ -4,17 +4,21 @@ public class MetronomeEvent {
     private String session;
     private int count;
     private int currentBPM;
-    private long timestamp;
+    private String trueTime;
 
-    public MetronomeEvent(String session, int count, int currentBPM, long timestamp) {
+    public MetronomeEvent(String session, int count, int currentBPM, String trueTime) {
         this.session = session;
         this.count = count;
         this.currentBPM = currentBPM;
-        this.timestamp = timestamp;
+        this.trueTime = trueTime;
     }
 
     public String toString() {
-        return "Session: " + getSession() + "; Count: " + getCount() + "; BPM: " + getCurrentBPM() + "; Timestamp: " + timestamp;
+        return "Session: " + getSession() + "; Count: " + getCount() + "; BPM: " + getCurrentBPM() + "; Timestamp: " + trueTime;
+    }
+
+    public String toStorageString() {
+        return getSession() + "," + getCount() + "," + getCurrentBPM() + "," + trueTime;
     }
 
     public String getSession() {
@@ -41,11 +45,11 @@ public class MetronomeEvent {
         this.currentBPM = currentBPM;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public String getTrueTime() {
+        return trueTime;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void setTrueTime(String trueTime) {
+        this.trueTime = trueTime;
     }
 }

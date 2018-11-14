@@ -7,7 +7,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mick.example.metronome.R;
+import com.mick.example.metronome.domains.MetronomeEvent;
 import com.mick.example.metronome.utilities.Metronome;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static Metronome metronome;
@@ -23,20 +26,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View v) {
-        EditText edit = (EditText) findViewById(R.id.input_text);
-        String input = edit.getText().toString();
-        boolean ret = true;
-        if (!input.equalsIgnoreCase("")) {
-            int newBpm = Integer.parseInt(input);
-            ret = metronome.setBpm(newBpm);
-        }
-        if (ret) {
-            if (v.getId() == R.id.start) {
-                metronome.start();
-            } else if (v.getId() == R.id.stop) {
-                metronome.stop();
+        if (v.getId() == R.id.read) {
+            TextView console = (TextView) findViewById(R.id.console);
+            ArrayList<MetronomeEvent> eventsList = metronome.getAllMetronomeEvents();
+            String buf = "";
+            for (int i = 0; i < eventsList.size(); i++) {
+                buf = eventsList.get(i).toString() + "\n" + buf;
             }
+            console.setText(buf);
+        } else {
+            EditText edit = (EditText) findViewById(R.id.input_text);
+            String input = edit.getText().toString();
+            boolean ret = true;
+            if (!input.equalsIgnoreCase("")) {
+                int newBpm = Integer.parseInt(input);
+                ret = metronome.setBpm(newBpm);
+            }
+            if (ret) {
+                if (v.getId() == R.id.start) {
+                    metronome.start();
+                } else if (v.getId() == R.id.stop) {
+                    metronome.stop();
+                }
+            }
+            status.setText(metronome.getStatus());
         }
-        status.setText(metronome.getStatus());
     }
 }

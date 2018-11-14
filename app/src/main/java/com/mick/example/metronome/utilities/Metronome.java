@@ -7,14 +7,18 @@ import android.util.Log;
 import com.mick.example.metronome.R;
 import com.mick.example.metronome.domains.MetronomeEvent;
 
-import java.util.Date;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static android.content.ContentValues.TAG;
-
 public class Metronome {
     private Context mContext;
+    private final String TAG = "metronome";
     private final int MILLIS_IN_MINUTE = 60000;
 
     private int bpm = 30;
@@ -26,11 +30,16 @@ public class Metronome {
     private Timer mainTimer;
     private MyTimerTask mainTimerTask;
     private String status;
+    private ServerNTP mServerNTP;
+    private String fileName = "/metronome.txt";
+    private ArrayList<MetronomeEvent> MetronomeEventsList;
 
     public Metronome(Context mContext, String session) {
         this.mContext = mContext;
         this.session = session;
         status = "";
+        mServerNTP = new ServerNTP(this.mContext);
+        MetronomeEventsList = new ArrayList<>();
     }
 
 
@@ -57,14 +66,69 @@ public class Metronome {
         if (isFirst) {
             isFirst = false;
         } else {
-            Date date = new Date();
-            long currentTimestamp = date.getTime();
+            String trueTime = mServerNTP.getTrueTime().toString();
             mp.start();
 
             count++;
-            MetronomeEvent event = new MetronomeEvent(session, count, bpm, currentTimestamp);
+            MetronomeEvent event = new MetronomeEvent(session, count, bpm, trueTime);
             Log.i(TAG, event.toString());
+            appendToFile(event.toStorageString(), mContext);
+//            readFile(mContext);
         }
+    }
+
+
+    private void appendToFile(String data, Context context) {
+        File file = new File(context.getFilesDir() + fileName);
+        FileOutputStream outputStream;
+
+        try {
+            outputStream = new FileOutputStream(file, true);
+            outputStream.write(data.getBytes());
+            outputStream.write("\n".getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ArrayList<String> readFile(Context context) {
+        BufferedReader reader = null;
+        String filename = context.getFilesDir() + fileName;
+        File file = new File(filename);
+        ArrayList<String> lineList = new ArrayList<>();
+
+        try {
+
+            reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lineList.add(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+//        file.delete();
+        return lineList;
+    }
+
+    public ArrayList<MetronomeEvent> getAllMetronomeEvents() {
+        ArrayList<String> lineList = readFile(mContext);
+        for (int i = 0; i < lineList.size(); i++) {
+            String[] buf = lineList.get(i).split(",");
+            if (buf.length == 4) {
+                MetronomeEventsList.add(new MetronomeEvent(buf[0], Integer.parseInt(buf[1]), Integer.parseInt(buf[2]), buf[2]));
+            }
+        }
+
+        return MetronomeEventsList;
     }
 
     public String getStatus() {
